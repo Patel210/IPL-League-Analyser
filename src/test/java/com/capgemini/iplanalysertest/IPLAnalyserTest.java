@@ -77,4 +77,14 @@ public class IPLAnalyserTest {
 			assertEquals("Shikhar Dhawan", topFourHitters.get(0).getPlayerName());
 		} catch (IPLAnalyserException e) {}
 	}
+	
+	@Test
+	public void givenAFileWhenLoadedToGetTopBatsmansWithBestStrikeRateAndMaximumFoursAndSixes_ShouldReturnCorrectResult() {
+		try {
+			List<IPLBatsman> topStrikeRateWithMaximumBoundaries = iplAnalyser
+					.getBatsmenWithBesStrikeRatesAndMaximumBoundaries(3);
+			assertEquals("Andre Russell", topStrikeRateWithMaximumBoundaries.get(0).getPlayerName());
+		} catch (IPLAnalyserException e) {
+		}
+	}
 }
