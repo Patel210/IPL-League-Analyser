@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.capgemini.exceptions.IPLAnalyserException;
 import com.capgemini.iplanalyser.IPLAnalyser;
+import com.capgemini.iplpojo.IPLBatsman;
 import com.capgemini.opencsvbuilder.CSVException;
 
 public class IPLAnalyserTest {
@@ -58,6 +59,14 @@ public class IPLAnalyserTest {
 		try {
 			List<Double> list = iplAnalyser.getTopStrikeRates(3);
 			assertEquals(333.33, list.get(0), 0.0);
+		} catch (IPLAnalyserException e) {}
+	}
+	
+	@Test
+	public void givenAFileWhenLoadedToGetTopBatsmenWithMaximumSixes_ShouldReturnCorrectResult() {
+		try {
+			List<IPLBatsman> topSixHitters = iplAnalyser.getBatsmenWithMaximumSixes(3);
+			assertEquals("Andre Russell", topSixHitters.get(0).getPlayerName());
 		} catch (IPLAnalyserException e) {}
 	}
 }
