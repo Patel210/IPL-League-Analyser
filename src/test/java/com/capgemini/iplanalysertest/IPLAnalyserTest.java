@@ -84,7 +84,15 @@ public class IPLAnalyserTest {
 			List<IPLBatsman> topStrikeRateWithMaximumBoundaries = iplAnalyser
 					.getBatsmenWithBesStrikeRatesAndMaximumBoundaries(3);
 			assertEquals("Andre Russell", topStrikeRateWithMaximumBoundaries.get(0).getPlayerName());
-		} catch (IPLAnalyserException e) {
-		}
+		} catch (IPLAnalyserException e) {}
+	}
+	
+	@Test
+	public void givenAFileWhenLoadedToGetTopCricketersWhoHadBestAveragesWithBestStrikingRates_ShouldReturnCorrectResult() {
+		try {
+			List<IPLBatsman> bestAveragesWithBestStrikeRateCricketers = iplAnalyser
+					.getBatsmenWithBestAveragesAndBestStrikeRates(3);
+			assertEquals("Andre Russell", bestAveragesWithBestStrikeRateCricketers.get(0).getPlayerName());
+		} catch (IPLAnalyserException e) {}
 	}
 }
