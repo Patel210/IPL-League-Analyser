@@ -2,9 +2,12 @@ package com.capgemini.iplanalysertest;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import com.capgemini.exceptions.IPLAnalyserException;
 import com.capgemini.iplanalyser.IPLAnalyser;
 import com.capgemini.opencsvbuilder.CSVException;
 
@@ -40,5 +43,14 @@ public class IPLAnalyserTest {
 			int entries = iplAnalyser.loadBowlerData(IPL_BOWLER_FILE_PATH);
 			assertEquals(99, entries);
 		} catch (CSVException e) {}
+	}
+	
+	@Test
+	public void givenAFileWhenLoadedToGetTopBattingAverages_ShouldReturnCorrectResult() {
+		try {
+			List<Double> list = iplAnalyser.getTopBattingAverages(3);
+			assertEquals(83.2, list.get(0), 0.0);
+		} catch (IPLAnalyserException e) {
+		}
 	}
 }
