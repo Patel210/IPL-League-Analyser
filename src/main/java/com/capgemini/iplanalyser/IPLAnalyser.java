@@ -100,24 +100,25 @@ public class IPLAnalyser {
 		return getSortedList(batsmanList, comparator, noOfTopPlayers);
 	}
 	
-	public List<IPLBatsman> getBatsmenWithBesStrikeRatesAndMaximumBoundaries(int noOfTopPlayers) throws IPLAnalyserException{
-		if(batsmanList.size() == 0) {
+	public List<IPLBatsman> getBatsmenWithBestStrikeRatesAndMaximumBoundaries(int noOfTopPlayers)
+			throws IPLAnalyserException {
+		if (batsmanList.size() == 0) {
 			throw new IPLAnalyserException("No Data Available", IPLAnalyserException.ExceptionType.NO_DATA_FOUND);
 		}
-		Comparator<IPLBatsman> comparator = Comparator.comparing(IPLBatsman::performanceFactor)
-													  .reversed();
+		Comparator<IPLBatsman> comparator = Comparator.comparing(IPLBatsman::performanceFactor).reversed();
 		return getSortedList(batsmanList, comparator, noOfTopPlayers);
 	}
 	
-	public List<IPLBatsman> getBatsmenWithBestAveragesAndBestStrikeRates(int noOfTopPlayers) throws IPLAnalyserException {
-		if(batsmanList.size() == 0) {
+	public List<IPLBatsman> getBatsmenWithBestAveragesAndBestStrikeRates(int noOfTopPlayers)
+			throws IPLAnalyserException {
+		if (batsmanList.size() == 0) {
 			throw new IPLAnalyserException("No Data Available", IPLAnalyserException.ExceptionType.NO_DATA_FOUND);
 		}
 		Function<IPLBatsman, Double> toGetAverage = p -> Double.parseDouble(p.getAverage());
-		Comparator<IPLBatsman> comparatorForAverageRuns = Comparator.comparing(toGetAverage)
-																	.reversed();
+		Comparator<IPLBatsman> comparatorForAverageRuns = Comparator.comparing(toGetAverage).reversed();
 		List<IPLBatsman> sortedListByAverages = getSortedList(batsmanList, comparatorForAverageRuns, noOfTopPlayers);
-		return getSortedList(sortedListByAverages, Comparator.comparing(IPLBatsman::getStrikeRate).reversed(), noOfTopPlayers);
+		return getSortedList(sortedListByAverages, Comparator.comparing(IPLBatsman::getStrikeRate).reversed(),
+				noOfTopPlayers);
 	}
 	
 	public List<IPLBatsman> getBatsmenWithMaximumRunsWithBestAverages(int noOfTopPlayers) throws IPLAnalyserException {
@@ -125,8 +126,7 @@ public class IPLAnalyser {
 			throw new IPLAnalyserException("No Data Available", IPLAnalyserException.ExceptionType.NO_DATA_FOUND);
 		}
 		Function<IPLBatsman, Double> toGetAverage = p -> Double.parseDouble(p.getAverage());
-		Comparator<IPLBatsman> comparator = Comparator.comparing(IPLBatsman::getRuns)
-				  									  .reversed();
+		Comparator<IPLBatsman> comparator = Comparator.comparing(IPLBatsman::getRuns).reversed();
 		List<IPLBatsman> sortedListByRuns = getSortedList(batsmanList, comparator, noOfTopPlayers);
 		return getSortedList(sortedListByRuns, Comparator.comparing(toGetAverage).reversed(), noOfTopPlayers);
 	}
@@ -159,5 +159,17 @@ public class IPLAnalyser {
 		}
 		Comparator<IPLBowler> comparator = Comparator.comparing(IPLBowler::getEconomy);
 		return getSortedList(bowlerList, comparator, noOfTopBowlers);
+	}
+	
+	public List<IPLBowler> getBowlerWithBestStrikeRateWith5wAnd4w(int noOfTopBowlers) throws IPLAnalyserException {
+		if (bowlerList.size() == 0) {
+			throw new IPLAnalyserException("No Data Available", IPLAnalyserException.ExceptionType.NO_DATA_FOUND);
+		}
+		Function<IPLBowler, Integer> getSumOf5wAnd4w = iplBowler -> iplBowler.getFiveWickets()
+				+ iplBowler.getFourWickets();
+		Comparator<IPLBowler> comparator = Comparator.comparing(getSumOf5wAnd4w).reversed();
+		List<IPLBowler> sortedByStrikeRate = getSortedList(bowlerList, Comparator.comparing(IPLBowler::getStrikeRate),
+															bowlerList.size());
+		return getSortedList(sortedByStrikeRate, comparator, noOfTopBowlers);
 	}
 }
