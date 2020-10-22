@@ -95,4 +95,13 @@ public class IPLAnalyserTest {
 			assertEquals("Andre Russell", bestAveragesWithBestStrikeRateCricketers.get(0).getPlayerName());
 		} catch (IPLAnalyserException e) {}
 	}
+	
+	@Test
+	public void givenAFileWhenLoadedToGetTopCricketersWhoHadMaximumRunsWithBestAverages_ShouldReturnCorrectResult() {
+		try {
+			List<IPLBatsman> maximumRunsWithBestAveragesCricketers = iplAnalyser
+					.getBatsmenWithMaximumRunsWithBestAverages(3);
+			assertEquals("David Warner", maximumRunsWithBestAveragesCricketers.get(0).getPlayerName());
+		} catch (IPLAnalyserException e) {}
+	}
 }
