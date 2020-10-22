@@ -12,6 +12,7 @@ import org.junit.Test;
 import com.capgemini.exceptions.IPLAnalyserException;
 import com.capgemini.iplanalyser.IPLAnalyser;
 import com.capgemini.iplpojo.IPLBatsman;
+import com.capgemini.iplpojo.IPLBowler;
 import com.capgemini.opencsvbuilder.CSVException;
 
 public class IPLAnalyserTest {
@@ -123,5 +124,13 @@ public class IPLAnalyserTest {
 			List<Double> expectedTopBowlingStrikeRates = Arrays.asList(new Double[]{8.66, 10.75, 11.0});
 			assertEquals(expectedTopBowlingStrikeRates, topBowlerStrikeRates);
 		} catch (IPLAnalyserException e) {}
+	}
+	
+	@Test
+	public void givenAFileWhenLoadedToGetBowlersWithBestEconomyRates_ShouldReturnCorrectResult() {
+		try {
+			List<IPLBowler> bestEconomyRatesBowlers = iplAnalyser.getBowlersWithBestEconomyRate(3);
+			assertEquals("Shivam Dube", bestEconomyRatesBowlers.get(0).getPlayerName());
+		} catch(IPLAnalyserException e) {}
 	}
 }
