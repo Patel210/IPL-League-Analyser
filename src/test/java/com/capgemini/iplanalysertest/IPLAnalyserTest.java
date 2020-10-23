@@ -141,4 +141,12 @@ public class IPLAnalyserTest {
 			assertEquals("Kagiso Rabada", bestStrikeRatesAndBest5wsAnd4wsBowlers.get(0).getPlayerName());
 		} catch(IPLAnalyserException e) {}
 	}
+	
+	@Test
+	public void givenCSVBowlerFileWhenLoadedToGetBowlersWithBestAveragesWithBestStrikeRates_ShouldReturnCorrectResult() {
+		try {
+			List<IPLBowler> bestAveragesWithBestStrikeRateBowlers = iplAnalyser.getBowlerWithBestBowlingAveragesWithBestStrikingRates(3);
+			assertEquals("Alzarri Joseph", bestAveragesWithBestStrikeRateBowlers.get(0).getPlayerName());
+		} catch(IPLAnalyserException e) {}
+	}
 }
