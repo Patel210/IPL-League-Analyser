@@ -208,6 +208,15 @@ public class IPLAnalyser implements CricketAnalyser {
 		return getSortedList(batsmanList, comparator, noOfTopPlayers);
 	}
 	
+	public List<Batsman> getBatsmenWithZeroCenturiesAndFiftiesButHadBestAverages(int noOfTopPlayers) throws AnalyserException{
+		checkEmptyList(batsmanList);
+		Comparator<Batsman> comparator = Comparator.comparing(getBattingAverages()).reversed();
+		List<Batsman> zeroCenturiesAndFiftiesBatsmenList = batsmanList.stream()
+																	  .filter(a -> a.getFifties() == 0 && a.getHundreds() == 0 )
+																	  .collect(Collectors.toList());
+		return getSortedList(zeroCenturiesAndFiftiesBatsmenList, comparator, noOfTopPlayers);
+	}
+	
 	private List<String> getCricketersWhoBatsAndBowls() throws AnalyserException{
 		checkEmptyList(batsmanList);
 		checkEmptyList(bowlerList);
