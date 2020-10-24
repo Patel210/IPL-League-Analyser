@@ -2,7 +2,6 @@ package com.capgemini.iplanalysertest;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -173,5 +172,13 @@ public class IPLAnalyserTest {
 			List<String> cricketersWithMostRunsAndWickets = cricketAnalyser.getCricketersWithMostWicketsAndRunsHit(5);
 			assertEquals("Andre Russell", cricketersWithMostRunsAndWickets.get(0));
 		} catch(AnalyserException e) {}
+	}
+	
+	@Test
+	public void givenCSVBatsmenFile_WhenLoadedToGetTopBatsmenWithMaximumHundredsWithBestAverages_ShouldReturnCorrectResult() {
+		try {
+			List<Batsman> maximumHundredsWithBestAveragesBatsmen = cricketAnalyser.getBatsmenWithMostHunderedsWithBestAverage(3);
+			assertEquals("David Warner", maximumHundredsWithBestAveragesBatsmen.get(0).getPlayerName());
+		} catch (AnalyserException e) {}
 	}
 }
