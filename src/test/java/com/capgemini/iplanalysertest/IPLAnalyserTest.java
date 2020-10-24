@@ -166,4 +166,12 @@ public class IPLAnalyserTest {
 			assertEquals("Andre Russell", cricketersWithBestBattingAndBowlingAverages.get(0));
 		} catch(AnalyserException e) {}
 	}
+	
+	@Test
+	public void givenBothCSVFiles_WhenLoadedToGetCricketersWithMostRunsAndWickets_ThenReturnCorrectResult() {
+		try {
+			List<String> cricketersWithMostRunsAndWickets = cricketAnalyser.getCricketersWithMostWicketsAndRunsHit(5);
+			assertEquals("Andre Russell", cricketersWithMostRunsAndWickets.get(0));
+		} catch(AnalyserException e) {}
+	}
 }
