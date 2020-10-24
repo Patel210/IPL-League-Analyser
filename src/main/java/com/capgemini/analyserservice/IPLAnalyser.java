@@ -153,6 +153,14 @@ public class IPLAnalyser implements CricketAnalyser {
 		return getSortedList(sortedByAverage, Comparator.comparing(getBowlingStrikeRates()), noOfTopBowlers);
 	}
 	
+	public List<Bowler> getBowlerWithMaximumWicketsWithBestBowlingAverages(int noOfTopBowlers) 
+																		   throws AnalyserException{
+		checkEmptyList(bowlerList);
+		Comparator<Bowler> comparator = Comparator.comparing(Bowler::getWickets).reversed();
+		List<Bowler> sortedByWickets = getSortedList(bowlerList, comparator, noOfTopBowlers);
+		return getSortedList(sortedByWickets, Comparator.comparing(getBowlingAverages()), noOfTopBowlers);
+	}
+	
 	private <E> List<E> getSortedList(List<E> list, Comparator<E> comparator, int noOfTopPlayers){
 		return list.stream()
 				   .sorted(comparator)

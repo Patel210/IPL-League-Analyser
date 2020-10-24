@@ -26,4 +26,6 @@ public interface CricketAnalyser {
 	public List<Bowler> getBowlerWithBestStrikeRateWith5wAnd4w(int noOfTopBowlers) throws AnalyserException;
 	public List<Bowler> getBowlerWithBestBowlingAveragesWithBestStrikingRates(int noOfTopBowlers) 
 			throws AnalyserException;
+	public List<Bowler> getBowlerWithMaximumWicketsWithBestBowlingAverages(int noOfTopBowlers) 
+			throws AnalyserException;
 }
