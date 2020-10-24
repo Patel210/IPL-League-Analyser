@@ -1,8 +1,8 @@
-package com.capgemini.iplpojo;
+package com.capgemini.pojo;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class IPLBowler {
+public class Bowler {
 	
 	@CsvBindByName(column = "POS", required = true)
 	private int pos;

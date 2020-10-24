@@ -1,8 +1,8 @@
-package com.capgemini.iplpojo;
+package com.capgemini.pojo;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class IPLBatsman {
+public class Batsman {
 
 	@CsvBindByName(column = "POS", required = true)
 	private int pos;
@@ -127,7 +127,7 @@ public class IPLBatsman {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		IPLBatsman other = (IPLBatsman) obj;
+		Batsman other = (Batsman) obj;
 		if (average == null) {
 			if (other.average != null)
 				return false;

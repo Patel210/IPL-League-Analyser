@@ -1,4 +1,4 @@
-package com.capgemini.iplanalyser;
+package com.capgemini.analyserservice;
 
 public class Welcome {
 	public static void main(String[] args) {

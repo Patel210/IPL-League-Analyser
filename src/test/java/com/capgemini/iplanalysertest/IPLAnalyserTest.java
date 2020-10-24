@@ -9,42 +9,43 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.capgemini.exceptions.IPLAnalyserException;
-import com.capgemini.iplanalyser.IPLAnalyser;
-import com.capgemini.iplpojo.IPLBatsman;
-import com.capgemini.iplpojo.IPLBowler;
+import com.capgemini.analyserservice.CricketAnalyser;
+import com.capgemini.analyserservice.IPLAnalyser;
+import com.capgemini.exceptions.AnalyserException;
 import com.capgemini.opencsvbuilder.CSVException;
+import com.capgemini.pojo.Batsman;
+import com.capgemini.pojo.Bowler;
 
 public class IPLAnalyserTest {
 	private static final String IPL_BATSMAN_FILE_PATH = "C:\\Users\\Pranav\\eclipse-workspace\\IPL Analyser\\src\\test\\resources\\WP DP Data_01 IPL2019FactsheetMostRuns - WP DP Data_01 IPL2019FactsheetMostRuns.csv";
 	private static final String IPL_BOWLER_FILE_PATH = "C:\\Users\\Pranav\\eclipse-workspace\\IPL Analyser\\src\\test\\resources\\WP DP Data_02 IPL2019FactsheetMostWkts - WP DP Data_02 IPL2019FactsheetMostWkts.csv";
 
-	private IPLAnalyser iplAnalyser;
+	private CricketAnalyser cricketAnalyser;
 	
 	@Before
 	public void setup() {
-		iplAnalyser = new IPLAnalyser();
+		cricketAnalyser = new IPLAnalyser();
 		try {
-			iplAnalyser.loadBatsmanData(IPL_BATSMAN_FILE_PATH);
-			iplAnalyser.loadBowlerData(IPL_BOWLER_FILE_PATH);
+			cricketAnalyser.loadBatsmanData(IPL_BATSMAN_FILE_PATH);
+			cricketAnalyser.loadBowlerData(IPL_BOWLER_FILE_PATH);
 		} catch (CSVException e) {
 		}
 	}
 	
 	@Test
 	public void givenCSVBatsmenFileWithBatsmanData_WhenLoaded_ShouldReturnTheEntries() {
-		iplAnalyser = new IPLAnalyser();
+		cricketAnalyser = new IPLAnalyser();
 		try {
-			int entries = iplAnalyser.loadBatsmanData(IPL_BATSMAN_FILE_PATH);
+			int entries = cricketAnalyser.loadBatsmanData(IPL_BATSMAN_FILE_PATH);
 			assertEquals(100, entries);
 		} catch (CSVException e) {}
 	}
 	
 	@Test
 	public void givenCSVBowlerFileWithBowlerData_WhenLoaded_ShouldReturnTheEntries() {
-		iplAnalyser = new IPLAnalyser();
+		cricketAnalyser = new IPLAnalyser();
 		try {
-			int entries = iplAnalyser.loadBowlerData(IPL_BOWLER_FILE_PATH);
+			int entries = cricketAnalyser.loadBowlerData(IPL_BOWLER_FILE_PATH);
 			assertEquals(99, entries);
 		} catch (CSVException e) {}
 	}
@@ -52,101 +53,101 @@ public class IPLAnalyserTest {
 	@Test
 	public void givenCSVBatsmenFileWhenLoadedToGetTopBattingAverages_ShouldReturnCorrectResult() {
 		try {
-			List<Double> list = iplAnalyser.getTopBattingAverages(3);
+			List<Double> list = cricketAnalyser.getTopBattingAverages(3);
 			assertEquals(83.2, list.get(0), 0.0);
-		} catch (IPLAnalyserException e) {}
+		} catch (AnalyserException e) {}
 	}
 	
 	@Test
 	public void givenCSVBatsmenFileWhenLoadedToGetTopStrikeRatesOfTheBatsman_ShouldReturnCorrectResult() {
 		try {
-			List<Double> list = iplAnalyser.getTopStrikeRates(3);
+			List<Double> list = cricketAnalyser.getTopBattingStrikeRates(3);
 			assertEquals(333.33, list.get(0), 0.0);
-		} catch (IPLAnalyserException e) {}
+		} catch (AnalyserException e) {}
 	}
 	
 	@Test
 	public void givenCSVBatsmenFileWhenLoadedToGetTopBatsmenWithMaximumSixes_ShouldReturnCorrectResult() {
 		try {
-			List<IPLBatsman> topSixHitters = iplAnalyser.getBatsmenWithMaximumSixes(3);
+			List<Batsman> topSixHitters = cricketAnalyser.getBatsmenWithMaximumSixes(3);
 			assertEquals("Andre Russell", topSixHitters.get(0).getPlayerName());
-		} catch (IPLAnalyserException e) {}
+		} catch (AnalyserException e) {}
 	}
 	
 	@Test
 	public void givenCSVBatsmenFileWhenLoadedToGetTopBatsmenWithMaximumFours_ShouldReturnCorrectResult() {
 		try {
-			List<IPLBatsman> topFourHitters = iplAnalyser.getBatsmenWithMaximumFours(3);
+			List<Batsman> topFourHitters = cricketAnalyser.getBatsmenWithMaximumFours(3);
 			assertEquals("Shikhar Dhawan", topFourHitters.get(0).getPlayerName());
-		} catch (IPLAnalyserException e) {}
+		} catch (AnalyserException e) {}
 	}
 	
 	@Test
 	public void givenCSVBatsmenFileWhenLoadedToGetTopBatsmenWithBestStrikeRateAndMaximumFoursAndSixes_ShouldReturnCorrectResult() {
 		try {
-			List<IPLBatsman> topStrikeRateWithMaximumBoundaries = iplAnalyser
+			List<Batsman> topStrikeRateWithMaximumBoundaries = cricketAnalyser
 					.getBatsmenWithBestStrikeRatesAndMaximumBoundaries(3);
 			assertEquals("Andre Russell", topStrikeRateWithMaximumBoundaries.get(0).getPlayerName());
-		} catch (IPLAnalyserException e) {}
+		} catch (AnalyserException e) {}
 	}
 	
 	@Test
 	public void givenCSVBatsmenFileWhenLoadedToGetTopBatsmenWhoHadBestAveragesWithBestStrikingRates_ShouldReturnCorrectResult() {
 		try {
-			List<IPLBatsman> bestAveragesWithBestStrikeRateCricketers = iplAnalyser
+			List<Batsman> bestAveragesWithBestStrikeRateCricketers = cricketAnalyser
 					.getBatsmenWithBestAveragesAndBestStrikeRates(3);
 			assertEquals("Andre Russell", bestAveragesWithBestStrikeRateCricketers.get(0).getPlayerName());
-		} catch (IPLAnalyserException e) {}
+		} catch (AnalyserException e) {}
 	}
 	
 	@Test
 	public void givenCSVBatsmenFileWhenLoadedToGetTopBatsmenWhoHadMaximumRunsWithBestAverages_ShouldReturnCorrectResult() {
 		try {
-			List<IPLBatsman> maximumRunsWithBestAveragesCricketers = iplAnalyser
+			List<Batsman> maximumRunsWithBestAveragesCricketers = cricketAnalyser
 					.getBatsmenWithMaximumRunsWithBestAverages(3);
 			assertEquals("David Warner", maximumRunsWithBestAveragesCricketers.get(0).getPlayerName());
-		} catch (IPLAnalyserException e) {}
+		} catch (AnalyserException e) {}
 	}
 	
 	@Test
 	public void givenCSVBowlerFileWhenLoadedToGetTopBowlingAverages_ShouldReturnCorrectResult() {
 		try {
-			List<Double> topBowlingAverages = iplAnalyser.getTopBowlingAverages(3);
+			List<Double> topBowlingAverages = cricketAnalyser.getTopBowlingAverages(3);
 			List<Double> expectedTopBowlingAverages = Arrays.asList(new Double[]{11.0, 14.0, 14.5});
 			assertEquals(expectedTopBowlingAverages, topBowlingAverages);
-		} catch (IPLAnalyserException e) {}
+		} catch (AnalyserException e) {}
 	}
 	
 	@Test
 	public void givenCSVBowlerFileWhenLoadedToGetTopBowlerStrikeRates_ShouldReturnCorrectResult() {
 		try {
-			List<Double> topBowlerStrikeRates = iplAnalyser.getTopBowlingStrikeRates(3);
+			List<Double> topBowlerStrikeRates = cricketAnalyser.getTopBowlingStrikeRates(3);
 			List<Double> expectedTopBowlingStrikeRates = Arrays.asList(new Double[]{8.66, 10.75, 11.0});
 			assertEquals(expectedTopBowlingStrikeRates, topBowlerStrikeRates);
-		} catch (IPLAnalyserException e) {}
+		} catch (AnalyserException e) {}
 	}
 	
 	@Test
 	public void givenCSVBowlerFileWhenLoadedToGetBowlersWithBestEconomyRates_ShouldReturnCorrectResult() {
 		try {
-			List<IPLBowler> bestEconomyRatesBowlers = iplAnalyser.getBowlersWithBestEconomyRate(3);
+			List<Bowler> bestEconomyRatesBowlers = cricketAnalyser.getBowlersWithBestEconomyRate(3);
 			assertEquals("Shivam Dube", bestEconomyRatesBowlers.get(0).getPlayerName());
-		} catch(IPLAnalyserException e) {}
+		} catch(AnalyserException e) {}
 	}
 	
 	@Test
 	public void givenCSVBowlerFileWhenLoadedToGetBowlersWithBestStrikeRatesWith5wAnd4ws_ShouldRetunrCorrectResult() {
 		try {
-			List<IPLBowler> bestStrikeRatesAndBest5wsAnd4wsBowlers = iplAnalyser.getBowlerWithBestStrikeRateWith5wAnd4w(3);
+			List<Bowler> bestStrikeRatesAndBest5wsAnd4wsBowlers = cricketAnalyser.getBowlerWithBestStrikeRateWith5wAnd4w(3);
 			assertEquals("Kagiso Rabada", bestStrikeRatesAndBest5wsAnd4wsBowlers.get(0).getPlayerName());
-		} catch(IPLAnalyserException e) {}
+		} catch(AnalyserException e) {}
 	}
 	
 	@Test
 	public void givenCSVBowlerFileWhenLoadedToGetBowlersWithBestAveragesWithBestStrikeRates_ShouldReturnCorrectResult() {
 		try {
-			List<IPLBowler> bestAveragesWithBestStrikeRateBowlers = iplAnalyser.getBowlerWithBestBowlingAveragesWithBestStrikingRates(3);
+			List<Bowler> bestAveragesWithBestStrikeRateBowlers = cricketAnalyser.getBowlerWithBestBowlingAveragesWithBestStrikingRates(3);
 			assertEquals("Alzarri Joseph", bestAveragesWithBestStrikeRateBowlers.get(0).getPlayerName());
-		} catch(IPLAnalyserException e) {}
+		} catch(AnalyserException e) {}
 	}
 }
