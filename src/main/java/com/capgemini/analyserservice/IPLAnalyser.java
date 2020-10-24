@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.capgemini.exceptions.AnalyserException;
@@ -201,6 +200,12 @@ public class IPLAnalyser implements CricketAnalyser {
 			return (runsHit / maxRuns + wickets / maxWickets) / 2.0; 
 		};
 		return getSortedList(list, Comparator.comparing(getAllRounderValue).reversed(), noOfTopCricketers);
+	}
+	
+	public List<Batsman> getBatsmenWithMostHunderedsWithBestAverage(int noOfTopPlayers) throws AnalyserException{
+		checkEmptyList(batsmanList);
+		Comparator<Batsman> comparator = Comparator.comparing(Batsman::getHundreds).thenComparing(getBattingAverages()).reversed();
+		return getSortedList(batsmanList, comparator, noOfTopPlayers);
 	}
 	
 	private List<String> getCricketersWhoBatsAndBowls() throws AnalyserException{

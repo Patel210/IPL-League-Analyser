@@ -30,4 +30,5 @@ public interface CricketAnalyser {
 			throws AnalyserException;
 	public List<String> getCricketersWithBestBattingAndBowlingAverages(int noOfTopCricketers) throws AnalyserException;
 	public List<String> getCricketersWithMostWicketsAndRunsHit(int noOfTopCricketers) throws AnalyserException;
+	public List<Batsman> getBatsmenWithMostHunderedsWithBestAverage(int noOfTopBatsman) throws AnalyserException;
 }
