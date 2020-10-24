@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.capgemini.exceptions.AnalyserException;
@@ -159,6 +160,31 @@ public class IPLAnalyser implements CricketAnalyser {
 		Comparator<Bowler> comparator = Comparator.comparing(Bowler::getWickets).reversed();
 		List<Bowler> sortedByWickets = getSortedList(bowlerList, comparator, noOfTopBowlers);
 		return getSortedList(sortedByWickets, Comparator.comparing(getBowlingAverages()), noOfTopBowlers);
+	}
+	
+	public List<String> getCricketersWithBestBattingAndBowlingAverages(int noOfTopCricketers) throws AnalyserException{
+		checkEmptyList(bowlerList);
+		List<String> list = batsmanList.stream()
+									   .map(Batsman::getPlayerName)
+									   .filter(a -> bowlerList.stream().anyMatch(p -> a.equalsIgnoreCase(p.getPlayerName())))
+									   .collect(Collectors.toList());
+		Function<String, Double> getAllRounderValue = a -> {
+			Double battingAvg = batsmanList.stream()
+										   .filter(p -> p.getPlayerName().equals(a))
+										   .map(getBattingAverages())
+										   .findFirst()
+										   .get();
+			Double bowlingAvg = bowlerList.stream()
+										  .filter(p -> p.getPlayerName().equals(a))
+										  .map(getBowlingAverages())
+										  .findFirst()
+										  .get();
+			if (bowlingAvg == 0.0) {
+				return 0.0;
+			}
+			return battingAvg / bowlingAvg;
+		};
+		return getSortedList(list, Comparator.comparing(getAllRounderValue).reversed(), noOfTopCricketers);
 	}
 	
 	private <E> List<E> getSortedList(List<E> list, Comparator<E> comparator, int noOfTopPlayers){
