@@ -181,4 +181,11 @@ public class IPLAnalyserTest {
 			assertEquals("David Warner", maximumHundredsWithBestAveragesBatsmen.get(0).getPlayerName());
 		} catch (AnalyserException e) {}
 	}
+	@Test
+	public void givenCSVBatsmenFile_WhenLoadedToGetTopBatsmenWithZeroHundredsAndFiftiesButHadBestAverages_ShouldReturnCorrectResult() {
+		try {
+			List<Batsman> list = cricketAnalyser.getBatsmenWithZeroCenturiesAndFiftiesButHadBestAverages(3);
+			assertEquals("Marcus Stoinis", list.get(0).getPlayerName());
+		} catch (AnalyserException e) {}
+	}
 }
