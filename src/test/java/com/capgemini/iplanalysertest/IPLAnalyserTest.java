@@ -158,4 +158,12 @@ public class IPLAnalyserTest {
 			assertEquals("Kagiso Rabada", maxWicketsWithBestAveragesBowlers.get(0).getPlayerName());
 		} catch(AnalyserException e) {}
 	}
+	
+	@Test
+	public void givenBothCSVFiles_WhenLoadedToGetCricketersWithBestBattingAndBowlingAverages_ThenReturnCorrectResult() {
+		try {
+			List<String> cricketersWithBestBattingAndBowlingAverages = cricketAnalyser.getCricketersWithBestBattingAndBowlingAverages(5);
+			assertEquals("Andre Russell", cricketersWithBestBattingAndBowlingAverages.get(0));
+		} catch(AnalyserException e) {}
+	}
 }
