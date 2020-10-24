@@ -163,11 +163,7 @@ public class IPLAnalyser implements CricketAnalyser {
 	}
 	
 	public List<String> getCricketersWithBestBattingAndBowlingAverages(int noOfTopCricketers) throws AnalyserException{
-		checkEmptyList(bowlerList);
-		List<String> list = batsmanList.stream()
-									   .map(Batsman::getPlayerName)
-									   .filter(a -> bowlerList.stream().anyMatch(p -> a.equalsIgnoreCase(p.getPlayerName())))
-									   .collect(Collectors.toList());
+		List<String> list = getCricketersWhoBatsAndBowls();
 		Function<String, Double> getAllRounderValue = a -> {
 			Double battingAvg = batsmanList.stream()
 										   .filter(p -> p.getPlayerName().equals(a))
@@ -185,6 +181,36 @@ public class IPLAnalyser implements CricketAnalyser {
 			return battingAvg / bowlingAvg;
 		};
 		return getSortedList(list, Comparator.comparing(getAllRounderValue).reversed(), noOfTopCricketers);
+	}
+	
+	public List<String> getCricketersWithMostWicketsAndRunsHit(int noOfTopCricketers) throws AnalyserException{
+		List<String> list = getCricketersWhoBatsAndBowls();
+		Function<String, Double> getAllRounderValue = a -> {
+			Integer runsHit = batsmanList.stream()
+										 .filter(p -> p.getPlayerName().equals(a))
+										 .map(Batsman::getRuns)
+										 .findFirst()
+										 .get();
+			Integer wickets = bowlerList.stream()
+										.filter(p -> p.getPlayerName().equals(a))
+										.map(Bowler::getWickets)
+										.findFirst()
+										.get();
+			double maxRuns = batsmanList.stream().map(Batsman::getRuns).max((i,j) -> i.compareTo(j)).get();
+			double maxWickets = bowlerList.stream().map(Bowler::getWickets).max((i,j) -> i.compareTo(j)).get();
+			return (runsHit / maxRuns + wickets / maxWickets) / 2.0; 
+		};
+		return getSortedList(list, Comparator.comparing(getAllRounderValue).reversed(), noOfTopCricketers);
+	}
+	
+	private List<String> getCricketersWhoBatsAndBowls() throws AnalyserException{
+		checkEmptyList(batsmanList);
+		checkEmptyList(bowlerList);
+		return batsmanList.stream()
+						  .map(Batsman::getPlayerName)
+						  .filter(a -> bowlerList.stream()
+						  .anyMatch(p -> a.equalsIgnoreCase(p.getPlayerName())))
+						  .collect(Collectors.toList());
 	}
 	
 	private <E> List<E> getSortedList(List<E> list, Comparator<E> comparator, int noOfTopPlayers){
